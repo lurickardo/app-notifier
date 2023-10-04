@@ -43,8 +43,14 @@ jobs:
         # run : terraform -chdir=./terraform plan -input=false -out tfplan
         run: terraform -chdir=./terraform plan -input=false -destroy -out tfplan
 
-      - name: Step 08 - Terraform Apply
+      - name: Step 08 - Terraform Security Scannning Setup
+        run: pip3 install checkov
+
+      - name: Step 09 - Terraform Security Scannning Run
+        run: checkov --directory ./terraform
+
+      - name: Step 10 - Terraform Apply
         run: terraform -chdir=./terraform apply -auto-approve -input=false tfplan
 
-      - name: Step 09 - Terraform Show
+      - name: Step 11 - Terraform Show
         run: terraform -chdir=./terraform show
